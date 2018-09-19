@@ -147,41 +147,6 @@ void MainWindow::CreateSplittedWindow()
 void MainWindow::CreateTextEditor()
 {
     textEditor = new wxStyledTextCtrl( panel1, ID_TextEditor, wxDefaultPosition, wxDefaultSize, 0, wxEmptyString );
-    /*
-    textEditor->SetBackSpaceUnIndents( true );
-    textEditor->SetViewEOL( false );
-    textEditor->SetViewWhiteSpace( false );
-    textEditor->SetMarginWidth( 2, 0 );
-    textEditor->SetIndentationGuides( true );
-    textEditor->SetMarginType( 1, wxSTC_MARGIN_SYMBOL );
-    textEditor->SetMarginMask( 1, wxSTC_MASK_FOLDERS );
-    textEditor->SetMarginWidth( 1, 16);
-    textEditor->SetMarginSensitive( 1, true );
-    textEditor->SetProperty( wxT("fold"), wxT("1") );
-    textEditor->SetFoldFlags( wxSTC_FOLDFLAG_LINEBEFORE_CONTRACTED | wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED );
-    textEditor->SetMarginType( 0, wxSTC_MARGIN_NUMBER );
-    textEditor->SetMarginWidth( 0, textEditor->TextWidth( wxSTC_STYLE_LINENUMBER, wxT("_99999") ) );
-    textEditor->MarkerDefine( wxSTC_MARKNUM_FOLDER, wxSTC_MARK_BOXPLUS );
-    textEditor->MarkerSetBackground( wxSTC_MARKNUM_FOLDER, wxColour( wxT("BLACK") ) );
-    textEditor->MarkerSetForeground( wxSTC_MARKNUM_FOLDER, wxColour( wxT("WHITE") ) );
-    textEditor->MarkerDefine( wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_BOXMINUS );
-    textEditor->MarkerSetBackground( wxSTC_MARKNUM_FOLDEROPEN, wxColour( wxT("BLACK") ) );
-    textEditor->MarkerSetForeground( wxSTC_MARKNUM_FOLDEROPEN, wxColour( wxT("WHITE") ) );
-    textEditor->MarkerDefine( wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY );
-    textEditor->MarkerDefine( wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_BOXPLUS );
-    textEditor->MarkerSetBackground( wxSTC_MARKNUM_FOLDEREND, wxColour( wxT("BLACK") ) );
-    textEditor->MarkerSetForeground( wxSTC_MARKNUM_FOLDEREND, wxColour( wxT("WHITE") ) );
-    textEditor->MarkerDefine( wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_BOXMINUS );
-    textEditor->MarkerSetBackground( wxSTC_MARKNUM_FOLDEROPENMID, wxColour( wxT("BLACK") ) );
-    textEditor->MarkerSetForeground( wxSTC_MARKNUM_FOLDEROPENMID, wxColour( wxT("WHITE") ) );
-    textEditor->MarkerDefine( wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY );
-    textEditor->MarkerDefine( wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY );
-    textEditor->SetSelBackground( true, wxSystemSettings::GetColour( wxSYS_COLOUR_HIGHLIGHT ) );
-    textEditor->SetSelForeground( true, wxSystemSettings::GetColour( wxSYS_COLOUR_HIGHLIGHTTEXT ) );*/
-
-    /*textEditor->SetUseTabs( true );
-    textEditor->SetTabWidth( 4 );
-    textEditor->SetIndent( 4 );*/
     textEditor->SetTabIndents( true );
 
     textEditor->StyleSetSize(wxSTC_STYLE_DEFAULT,11);
@@ -204,9 +169,7 @@ void MainWindow::CreateTextEditor()
     textEditor->StyleSetBold(wxSTC_C_WORD2, true);
     textEditor->StyleSetBold(wxSTC_C_COMMENTDOCKEYWORD, true);
 
-    // a sample list of keywords, I haven't included them all to keep it short...
     textEditor->SetKeyWords(0, wxT("return for while break continue do if else false true enum case default Float goto sizeof stock public new native forward switch"));
-    //textEditor->SetKeyWords(1, wxT("const"));
 }
 
 void MainWindow::StatusBar()
