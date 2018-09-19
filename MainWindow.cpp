@@ -20,6 +20,8 @@ MainWindow::MainWindow() : wxFrame(nullptr,wxID_ANY,"BluePawn",wxDefaultPosition
 
     CreateSplittedWindow();
 
+    research=unique_ptr<Research>(new Research(*textEditor));
+
     StatusBar();
 
     this->Layout();
@@ -36,10 +38,14 @@ void MainWindow::SetupBindings()
     Bind(wxEVT_TOOL,&MainWindow::OnNewPage,this,ID_New);
     Bind(wxEVT_TOOL,&MainWindow::OnOpenFile,this,ID_Open);
     Bind(wxEVT_TOOL,&MainWindow::OnSaveFile,this,ID_Save);
-    Bind(wxEVT_TOOL,&MainWindow::OnSaveFileAs,this,ID_SaveAs);
+    //Bind(wxEVT_TOOL,&MainWindow::OnSaveFileAs,this,ID_SaveAs);
+    Bind(wxEVT_TOOL,&MainWindow::OnFind,this,ID_Find);
+    //Bind(wxEVT_TOOL,&MainWindow::OnFindReplace,this,ID_FindReplace);
     Bind(wxEVT_TOOL,&MainWindow::OnCompile,this,ID_Compile);
     Bind(wxEVT_TOOL,&MainWindow::OnChangeIncludesFolder,this,ID_IncFolder);
     Bind(wxEVT_STC_MODIFIED,&MainWindow::OnTypeText,this,ID_TextEditor);
+
+    Bind(wxEVT_CHAR_HOOK,&MainWindow::KeyShortcutManager,this);
 }
 
 void MainWindow::CreateMenuBar()
@@ -57,7 +63,7 @@ void MainWindow::CreateMenuBar()
     wxMenuItem * saveMenuItem=new wxMenuItem(fileMenu,ID_Save,"Save");
     fileMenu->Append(saveMenuItem);
 
-    wxMenuItem * saveasMenuItem=new wxMenuItem(fileMenu,ID_SaveAs,"Save as");
+    wxMenuItem * saveasMenuItem=new wxMenuItem(fileMenu,ID_Save,"Save as");
     fileMenu->Append(saveasMenuItem);
 
     menuBar->Append( fileMenu, "File");
@@ -92,7 +98,8 @@ void MainWindow::CreateToolbar()
 
     saveTool = toolBar->AddTool( ID_Save, wxT("tool"), wxArtProvider::GetBitmap( wxART_FLOPPY, wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
 
-    m_tool4 = toolBar->AddTool( wxID_ANY, wxT("tool"), wxArtProvider::GetBitmap( wxT("gtk-find-and-replace"), wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
+    //findReplaceTool = toolBar->AddTool( ID_FindReplace, wxT("tool"), wxArtProvider::GetBitmap( wxT("gtk-find-and-replace"), wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
+    findTool = toolBar->AddTool( ID_Find, wxT("tool"), wxArtProvider::GetBitmap( wxT("gtk-find"), wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
 
     compileTool = toolBar->AddTool( ID_Compile, wxT("tool"), wxArtProvider::GetBitmap( wxT("gtk-execute"), wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
 
@@ -169,7 +176,7 @@ void MainWindow::CreateTextEditor()
     textEditor->StyleSetBold(wxSTC_C_WORD2, true);
     textEditor->StyleSetBold(wxSTC_C_COMMENTDOCKEYWORD, true);
 
-    textEditor->SetKeyWords(0, wxT("return for while break continue do if else false true enum case default Float goto sizeof stock public new native forward switch"));
+    textEditor->SetKeyWords(0, wxT("return for while break continue do if else false true enum case default Float goto sizeof stock public new native forward switch"));//TODO Add more..
 }
 
 void MainWindow::StatusBar()
@@ -241,33 +248,12 @@ void MainWindow::ShowFileDialog(wxFileDialog & fileDialog)
 
 void MainWindow::OnSaveFile(wxCommandEvent &event)
 {
-    if(!currentFile->GetPath().length())
-        OnSaveFileAs(event);
-    else
-        currentFile->Save(textEditor->GetText().ToStdString());
-
-    ResetAppName();
+    SaveFile();
 }
 
-void MainWindow::OnSaveFileAs(wxCommandEvent &event)
+void MainWindow::OnFind(wxCommandEvent &event)
 {
-    wxFileDialog saveDialog(this,"Save","","","Pawn files (*.pwn)|*.pwn|Pawn include files (*.inc)|*.inc",wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
-
-    if(saveDialog.ShowModal()==wxID_OK)
-    {
-        string path=saveDialog.GetPath().ToStdString();
-
-        //Check for file extension
-        if(path.substr(path.find_last_of("/")+1,path.length()).find(".")==string::npos)
-        {
-            path.append(".pwn");
-        }
-
-        currentFile->SetPath(path);
-        currentFile->Save(textEditor->GetText().ToStdString());
-
-        ResetAppName();
-    }
+    FindDialog();
 }
 
 void MainWindow::OnCompile(wxCommandEvent &event)
@@ -329,20 +315,34 @@ void MainWindow::OnTypeText(wxStyledTextEvent &event)
     }
 }
 
-void MainWindow::SaveFile(const string & path)
+void MainWindow::KeyShortcutManager(wxKeyEvent &event)
 {
-    ofstream outputFile;
-    outputFile.open(path);
-    outputFile << path<<endl;
-    outputFile.close();
+    cout << event.GetUnicodeKey()<<endl;
+    //if(wxGetKeyState(WXK_CONTROL) and event.GetKeyCode()==70)//if CTRL+F is pressed.. wait, what? 'and'??? wtf is this shit m8? nonono let's remove this shit
+    if(wxGetKeyState(WXK_CONTROL))
+    {
+        switch(event.GetUnicodeKey())
+        {
+            case 70://CTRL+F
+            {
+                FindDialog();
+                break;
+            }
+            case 83://CTRL+S
+            {
+                SaveFile();
+                break;
+            }
+        }
+    }
+    event.Skip();
 }
 
 void MainWindow::ResetAppName()
 {
     if(currentFile)
     {
-        string title="BluePawn";
-        title.append(" [");
+        string title="BluePawn [";
 
         if(currentFile->isEdited)
             title.append("*");
@@ -351,4 +351,50 @@ void MainWindow::ResetAppName()
 
         SetTitle(title);
     }
+}
+
+void MainWindow::FindDialog()
+{
+    wxTextEntryDialog findDialog(this,"Type text to search","Find...");
+
+    if(findDialog.ShowModal()==wxID_OK)
+    {
+        unsigned long pos=research->NewResearch(findDialog.GetValue().ToStdString());
+
+        if(pos!=string::npos)
+        {
+            textEditor->GotoPos(pos);
+            textEditor->SetSelection(pos,pos+research->GetText().length());
+        }
+        else
+        {
+            wxMessageBox("Not found","Error",wxICON_ERROR);
+        }
+    }
+}
+
+void MainWindow::SaveFile()
+{
+    if(!currentFile->GetPath().length())
+    {
+        wxFileDialog saveDialog(this,"Save","","","Pawn files (*.pwn)|*.pwn|Pawn include files (*.inc)|*.inc",wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+
+        if(saveDialog.ShowModal()==wxID_OK)
+        {
+            string path=saveDialog.GetPath().ToStdString();
+
+            //Check for file extension
+            if(path.substr(path.find_last_of("/")+1,path.length()).find(".")==string::npos)
+            {
+                path.append(".pwn");
+            }
+
+            currentFile->SetPath(path);
+            currentFile->Save(textEditor->GetText().ToStdString());
+        }
+    }
+    else
+        currentFile->Save(textEditor->GetText().ToStdString());
+
+    ResetAppName();
 }

@@ -12,12 +12,13 @@ enum
     ID_Open=wxID_HIGHEST+1,
     ID_New,
     ID_Save,
-    ID_SaveAs,
     ID_Compile,
     ID_IncFolder,
     ID_IncFoldPicker,
     ID_LastBuild,
-    ID_TextEditor
+    ID_TextEditor,
+    ID_FindReplace,
+    ID_Find
 };
 
 #endif //BLUEPAWN_WINDOWSIDS_H

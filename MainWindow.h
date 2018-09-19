@@ -15,6 +15,7 @@
 #include <wx/artprov.h>
 #include <wx/config.h>
 #include "PawnDocument.h"
+#include "Research.h"
 
 using std::string;
 
@@ -39,8 +40,7 @@ protected:
     string includesPath;
     PawnDocument * currentFile;
     string compileFlags;
-
-    void SaveFile(const string & path);
+    unique_ptr<Research> research;
 
 private:
 
@@ -52,7 +52,8 @@ private:
     wxToolBarToolBase* newDocTool;
     wxToolBarToolBase* openTool;
     wxToolBarToolBase* saveTool;
-    wxToolBarToolBase* m_tool4;
+    wxToolBarToolBase* findTool;
+    wxToolBarToolBase* findReplaceTool;
     wxToolBarToolBase* compileTool;
     wxToolBarToolBase* m_tool7;
     wxStyledTextCtrl* textEditor;
@@ -73,12 +74,16 @@ private:
     void OnNewPage(wxCommandEvent & event);
     void OnOpenFile(wxCommandEvent & event);
     void OnSaveFile(wxCommandEvent & event);
-    void OnSaveFileAs(wxCommandEvent & event);
+    void OnFind(wxCommandEvent & event);
+    void OnFindReplace(wxCommandEvent & event);
     void OnCompile(wxCommandEvent & event);
     void OnChangeIncludesFolder(wxCommandEvent & event);
     void OnTypeText(wxStyledTextEvent & event);
+    void KeyShortcutManager(wxKeyEvent & event);
 
     void ShowFileDialog(wxFileDialog & fileDialog);
+    void FindDialog();
+    void SaveFile();
 };
 
 
