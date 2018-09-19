@@ -12,6 +12,7 @@ using namespace std;
 
 MainWindow::MainWindow() : wxFrame(nullptr,wxID_ANY,"BluePawn",wxDefaultPosition,wxSize(1024,768)), includesPath("/include"), currentFile(new PawnDocument("")), compileFlags("-i'"+includesPath+"' ")
 {
+    SetIcon(wxIcon("bluepawn.png",wxBITMAP_TYPE_ANI));
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
     CreateMenuBar();
