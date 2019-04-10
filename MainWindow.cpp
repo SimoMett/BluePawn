@@ -12,7 +12,7 @@ using namespace std;
 
 MainWindow::MainWindow() : wxFrame(nullptr,wxID_ANY,"BluePawn",wxDefaultPosition,wxSize(1024,768)), includesPath("/include"), currentFile(new PawnDocument("")), compileFlags("-i'"+includesPath+"' ")
 {
-    SetIcon(wxIcon("bluepawn.png",wxBITMAP_TYPE_ANI));//Subdirectory "Pawn" is the working path
+    SetIcon(wxIcon("bluepawn.png",wxBITMAP_TYPE_ANI));//Subdirectory "BluePawn" is the working path
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
     CreateMenuBar();
@@ -211,7 +211,7 @@ void MainWindow::OnNewPage(wxCommandEvent &event)
 
 void MainWindow::OnOpenFile(wxCommandEvent &event)
 {
-    wxFileDialog fileDialog(this,"Open PWN fileMenu","","","Pawn files (*.pwn)|*.pwn|Pawn include files (*.inc)|*.inc|Other files ...|*",wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    wxFileDialog fileDialog(this,"Open PWN fileMenu","","","BluePawn files (*.pwn)|*.pwn|BluePawn include files (*.inc)|*.inc|Other files ...|*",wxFD_OPEN|wxFD_FILE_MUST_EXIST);
 
     if(currentFile && currentFile->isEdited)
     {
@@ -378,7 +378,7 @@ void MainWindow::SaveFile()
 {
     if(!currentFile->GetPath().length())
     {
-        wxFileDialog saveDialog(this,"Save","","","Pawn files (*.pwn)|*.pwn|Pawn include files (*.inc)|*.inc",wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+        wxFileDialog saveDialog(this,"Save","","","BluePawn files (*.pwn)|*.pwn|BluePawn include files (*.inc)|*.inc",wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
 
         if(saveDialog.ShowModal()==wxID_OK)
         {
