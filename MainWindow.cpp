@@ -100,10 +100,16 @@ void MainWindow::CreateToolbar()
     saveTool = toolBar->AddTool( ID_Save, wxT("tool"), wxArtProvider::GetBitmap( wxART_FLOPPY, wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
 
     //findReplaceTool = toolBar->AddTool( ID_FindReplace, wxT("tool"), wxArtProvider::GetBitmap( wxT("gtk-find-and-replace"), wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
+
+#ifdef __APPLE__
+    findTool = toolBar->AddTool( ID_Find, wxT("tool"), wxArtProvider::GetBitmap( wxART_MISSING_IMAGE, wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
+
+    compileTool = toolBar->AddTool( ID_Compile, wxT("tool"), wxArtProvider::GetBitmap( wxART_MISSING_IMAGE, wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
+#else
     findTool = toolBar->AddTool( ID_Find, wxT("tool"), wxArtProvider::GetBitmap( wxT("gtk-find"), wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
 
     compileTool = toolBar->AddTool( ID_Compile, wxT("tool"), wxArtProvider::GetBitmap( wxT("gtk-execute"), wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
-
+#endif
     m_tool7 = toolBar->AddTool( wxID_ANY, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_FORWARD, wxART_BUTTON ), wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL );
 
     toolBar->Realize();
