@@ -9,4 +9,4 @@ set(SOURCE_FILES runAllTests.cpp ../ConfigFile.h ../ConfigFile.cpp TestConfigFil
 
 add_executable(allBluePawnTests ${SOURCE_FILES})
 
-target_link_libraries(allBluePawnTests ${GTEST_BOTH_LIBRARIES} )
+target_link_libraries(allBluePawnTests ${GTEST_BOTH_LIBRARIES} stdc++fs)
