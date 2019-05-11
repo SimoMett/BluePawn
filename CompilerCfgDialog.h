@@ -8,15 +8,15 @@
 
 #include <wx/wx.h>
 
-class CompilerCfgDialog : public wxFrame
+class CompilerCfgDialog : public wxDialog
 {
 public:
     CompilerCfgDialog(wxWindow* parent, wxWindowID id);
 
 private:
 
-    wxTextCtrl * text_ctrl_3;
-    wxTextCtrl * text_ctrl_4;
+    wxTextCtrl * pawncLocTextCtrl;
+    wxTextCtrl * pawncOptTextCtrl;
 
 };
 
