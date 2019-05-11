@@ -30,10 +30,11 @@ public:
         return valuesMap[key];
     }
 
-    void AddKey(std::string key, string value);
+    void SetKeyValue(std::string key, string value);
 
 private:
     void GenerateConfigFile();
+    void LoadDefaultSettings();
     void LoadConfigFile();
 
     void ProcessFileEntry(string entry);
@@ -43,7 +44,6 @@ private:
     map<string,string> valuesMap;
 
     static const vector<string> entriesDictionary;
-
 };
 
 

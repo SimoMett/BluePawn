@@ -16,6 +16,7 @@
 #include <wx/config.h>
 #include "PawnDocument.h"
 #include "Research.h"
+#include "ConfigFile.h"
 
 using std::string;
 
@@ -23,7 +24,7 @@ class MainWindow : public wxFrame{
 
 public:
 
-    MainWindow();
+    explicit MainWindow(ConfigFile & configFile);
 
     const string & GetIncludesPath()
     {
@@ -41,6 +42,7 @@ protected:
     PawnDocument * currentFile;
     string compileFlags;
     unique_ptr<Research> research;
+    ConfigFile & configFile;
 
 private:
 

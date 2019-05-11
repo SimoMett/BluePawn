@@ -10,7 +10,7 @@
 
 using namespace std;
 
-MainWindow::MainWindow() : wxFrame(nullptr,wxID_ANY,"BluePawn",wxDefaultPosition,wxSize(1024,768)), includesPath("/include"), currentFile(new PawnDocument("")), compileFlags("-i'"+includesPath+"' ")
+MainWindow::MainWindow(ConfigFile & configFile) :configFile(configFile), wxFrame(nullptr,wxID_ANY,"BluePawn",wxDefaultPosition,wxSize(1024,768)), includesPath("/include"), currentFile(new PawnDocument("")), compileFlags("-i'"+includesPath+"' ")
 {
     SetIcon(wxIcon("bluepawn.png",wxBITMAP_TYPE_ANI));//Subdirectory "BluePawn" is the working path
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
@@ -275,8 +275,9 @@ void MainWindow::OnCompile(wxCommandEvent &event)
             const int max_buff = 512;
             char buffer[max_buff];
 
-            string cmd = "./pawncc '" + currentFile->GetPath() + "'" +" -D'"+currentFile->GetPath().substr(0,currentFile->GetPath().find_last_of("/"))+"' " + compileFlags;
+            string cmd = "pawncc '" + currentFile->GetPath() + "'" +" -D'"+currentFile->GetPath().substr(0,currentFile->GetPath().find_last_of("/"))+"' " + compileFlags;
             cmd.append(" 2>&1");
+            cout << cmd <<endl;
 
             CompilerDialog *compilerDialog = new CompilerDialog(this);
 
@@ -324,7 +325,7 @@ void MainWindow::OnTypeText(wxStyledTextEvent &event)
 
 void MainWindow::KeyShortcutManager(wxKeyEvent &event)
 {
-    cout << event.GetUnicodeKey()<<endl;
+    //cout << event.GetUnicodeKey()<<endl;
     //if(wxGetKeyState(WXK_CONTROL) and event.GetKeyCode()==70)//if CTRL+F is pressed.. wait, what? 'and'??? wtf is this shit m8? nonono let's remove this shit
     if(wxGetKeyState(WXK_CONTROL))
     {

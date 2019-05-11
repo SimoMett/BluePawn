@@ -10,7 +10,7 @@ using std::endl;
 
 bool MainApp::OnInit()
 {
-    mainWindow=new MainWindow;
+    mainWindow=new MainWindow(configFile);
     mainWindow->Show(true);
     return true;
 }
@@ -18,5 +18,6 @@ bool MainApp::OnInit()
 int MainApp::OnExit()
 {
     //TODO
+    return 0;
 }
 

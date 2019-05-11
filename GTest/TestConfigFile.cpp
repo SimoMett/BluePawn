@@ -20,7 +20,7 @@ TEST(ConfigFile,DefaultConstructor)
 TEST(ConfigFile,AddKey)
 {
     ConfigFile configFile;
-    configFile.AddKey("key_test","value_test");
+    configFile.SetKeyValue("key_test", "value_test");
     ASSERT_TRUE(configFile.GetKeyValue("key_test")=="value_test");
 }
 
@@ -48,4 +48,14 @@ TEST(ConfigFile, BadEntry)
     ASSERT_THROW(ConfigFile configFile,runtime_error);
 
     if(filesystem::exists("config.ini_bak")) filesystem::rename("config.ini_bak","config.ini");
+}
+TEST(ConfigFile, EntryWithSpace)
+{
+    if(filesystem::exists("config.ini")) filesystem::rename("config.ini","config.ini_bak");
+
+    ConfigFile configFile;
+    configFile.SetKeyValue("test space key","val");
+    ASSERT_TRUE(configFile.GetKeyValue("testspacekey")=="val");
+
+    if(filesystem::exists("config.ini_bak")) filesystem::rename("config.ini_bak","config.ini"); 
 }

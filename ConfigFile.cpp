@@ -11,12 +11,18 @@ ConfigFile::ConfigFile()
         GenerateConfigFile();
     }
 
+    LoadDefaultSettings();
+    //then override
     LoadConfigFile();
 }
 
-void ConfigFile::AddKey(std::string key, string value)
+void ConfigFile::SetKeyValue(std::string key, string value)
 {
-    valuesMap.insert(pair<string,string>(key,value));
+    //Erase spaces from 'key'
+    std::string::iterator end_pos = std::remove(key.begin(), key.end(), ' ');
+    key.erase(end_pos, key.end());
+
+    valuesMap[key]=value;
 }
 
 void ConfigFile::GenerateConfigFile()
@@ -29,10 +35,14 @@ void ConfigFile::GenerateConfigFile()
     file.close();
 }
 
+void ConfigFile::LoadDefaultSettings()
+{
+    SetKeyValue(entriesDictionary[0],"pawncc");
+    //...
+}
+
 void ConfigFile::LoadConfigFile()
 {
-    //TODO load default settings
-    //then override
     ifstream configFile("config.ini");
 
     if(configFile.is_open())
@@ -71,7 +81,7 @@ void ConfigFile::ProcessFileEntry(string entry)
         throw (runtime_error("Bad key entry: "+key));
 
     string value=entry.substr(entry.find('=')+1,entry.size());
-    AddKey(key,value);
+    SetKeyValue(key, value);
 }
 
 const vector<string> ConfigFile::entriesDictionary{"PawnccLocation"};

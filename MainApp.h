@@ -8,6 +8,7 @@
 #include <wx/wx.h>
 #include <memory>
 #include "MainWindow.h"
+#include "ConfigFile.h"
 
 using namespace std;
 
@@ -17,12 +18,14 @@ public:
 
     MainApp()= default;
 
-    virtual bool OnInit() override ;
-    virtual int OnExit() override ;
+    bool OnInit() override ;
+    int OnExit() override ;
+
+    ConfigFile configFile;
 
 private:
 
-     MainWindow * mainWindow;
+    MainWindow * mainWindow;
 };
 
 wxIMPLEMENT_APP(MainApp);
