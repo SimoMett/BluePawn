@@ -15,6 +15,7 @@ enum
     ID_Compile,
     ID_IncFolder,
     ID_IncFoldPicker,
+    ID_CompilerCfg,
     ID_LastBuild,
     ID_TextEditor,
     ID_FindReplace,

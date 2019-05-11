@@ -44,6 +44,7 @@ void MainWindow::SetupBindings()
     //Bind(wxEVT_TOOL,&MainWindow::OnFindReplace,this,ID_FindReplace);
     Bind(wxEVT_TOOL,&MainWindow::OnCompile,this,ID_Compile);
     Bind(wxEVT_TOOL,&MainWindow::OnChangeIncludesFolder,this,ID_IncFolder);
+    Bind(wxEVT_TOOL,&MainWindow::OnCompilerSettings,this,ID_CompilerCfg);
     Bind(wxEVT_STC_MODIFIED,&MainWindow::OnTypeText,this,ID_TextEditor);
 
     Bind(wxEVT_CHAR_HOOK,&MainWindow::KeyShortcutManager,this);
@@ -81,6 +82,8 @@ void MainWindow::CreateMenuBar()
 
     wxMenuItem* includesMenuItem=new wxMenuItem( fileMenu, ID_IncFolder, "Includes folder");
     settingsMenu->Append( includesMenuItem );
+    wxMenuItem* compilerSettingsMenuItem=new wxMenuItem(fileMenu,ID_CompilerCfg,"Compiler settings");
+    settingsMenu->Append(compilerSettingsMenuItem);
 
     /*wxMenuItem* compilerMenuItem=new wxMenuItem( fileMenu, wxID_ANY, "Compiler");
     settingsMenu->Append( compilerMenuItem );*/
@@ -275,7 +278,7 @@ void MainWindow::OnCompile(wxCommandEvent &event)
             const int max_buff = 512;
             char buffer[max_buff];
 
-            string cmd = "pawncc '" + currentFile->GetPath() + "'" +" -D'"+currentFile->GetPath().substr(0,currentFile->GetPath().find_last_of("/"))+"' " + compileFlags;
+            string cmd = configFile.GetKeyValue("PawnccLocation")+" '" + currentFile->GetPath() + "'" +" -D'"+currentFile->GetPath().substr(0,currentFile->GetPath().find_last_of("/"))+"' " + compileFlags;
             cmd.append(" 2>&1");
             cout << cmd <<endl;
 
@@ -312,6 +315,12 @@ void MainWindow::OnChangeIncludesFolder(wxCommandEvent &event)
     includeDialog->Show();
 
     cout << includeDialog->GetPath()<<endl;
+}
+
+void MainWindow::OnCompilerSettings(wxCommandEvent &event)
+{
+    wxMessageBox("TODO","Compiler Settings",wxICON_WARNING,__null,0,0);
+    //TODO Compiler settings dialog
 }
 
 void MainWindow::OnTypeText(wxStyledTextEvent &event)

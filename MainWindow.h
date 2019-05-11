@@ -80,6 +80,7 @@ private:
     void OnFindReplace(wxCommandEvent & event);
     void OnCompile(wxCommandEvent & event);
     void OnChangeIncludesFolder(wxCommandEvent & event);
+    void OnCompilerSettings(wxCommandEvent & event);
     void OnTypeText(wxStyledTextEvent & event);
     void KeyShortcutManager(wxKeyEvent & event);
 
