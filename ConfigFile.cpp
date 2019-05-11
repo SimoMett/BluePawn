@@ -38,6 +38,7 @@ void ConfigFile::GenerateConfigFile()
 void ConfigFile::LoadDefaultSettings()
 {
     SetKeyValue(entriesDictionary[0],"pawncc");
+    SetKeyValue(entriesDictionary[1],"");
     //...
 }
 
@@ -84,8 +85,9 @@ void ConfigFile::ProcessFileEntry(string entry)
     SetKeyValue(key, value);
 }
 
-const vector<string> ConfigFile::entriesDictionary{"PawnccLocation"};
+const vector<string> ConfigFile::entriesDictionary{"PawnccLocation","PawnccOptions"};
 void ConfigFile::WriteDefaultConfig(ofstream & file)
 {
     file << "PawnccLocation=pawncc" <<endl;
+    file << "PawnccOptions="<<endl;
 }
