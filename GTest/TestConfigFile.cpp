@@ -11,7 +11,7 @@ TEST(ConfigFile,DefaultConstructor)
 
     ASSERT_TRUE(std::filesystem::exists("config.ini"));
 
-    ASSERT_TRUE(configFile.GetKey("PawnccLocation")=="pawncc");
+    ASSERT_TRUE(configFile.GetKeyValue("PawnccLocation")=="pawncc");
 
     if(!alreadyExisted)
         std::filesystem::remove("config.ini");
@@ -21,7 +21,7 @@ TEST(ConfigFile,AddKey)
 {
     ConfigFile configFile;
     configFile.AddKey("key_test","value_test");
-    ASSERT_TRUE(configFile.GetKey("key_test")=="value_test");
+    ASSERT_TRUE(configFile.GetKeyValue("key_test")=="value_test");
 }
 
 TEST(ConfigFile, BadKey)
@@ -30,6 +30,19 @@ TEST(ConfigFile, BadKey)
 
     ofstream file("config.ini");
     file << "THISISABADKEY=44"<<endl;
+    file.close();
+
+    ASSERT_THROW(ConfigFile configFile,runtime_error);
+
+    if(filesystem::exists("config.ini_bak")) filesystem::rename("config.ini_bak","config.ini");
+}
+
+TEST(ConfigFile, BadEntry)
+{
+    if(filesystem::exists("config.ini")) filesystem::rename("config.ini","config.ini_bak");
+
+    ofstream file("config.ini");
+    file << "THISISABADKEY"<<endl;
     file.close();
 
     ASSERT_THROW(ConfigFile configFile,runtime_error);
