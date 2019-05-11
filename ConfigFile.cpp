@@ -8,11 +8,31 @@ ConfigFile::ConfigFile()
 {
     if(!filesystem::exists("config.ini"))
     {
-        ofstream file;
-        file.open("config.ini");
-        file.close();
+        GenerateConfigFile();
     }
 
+    LoadConfigFile();
+}
+
+void ConfigFile::AddKey(std::string key, string value)
+{
+    valuesMap.insert(pair<string,string>(key,value));
+}
+
+void ConfigFile::GenerateConfigFile()
+{
+    ofstream file;
+    file.open("config.ini");
+
+    WriteDefaultConfig(file);
+
+    file.close();
+}
+
+void ConfigFile::LoadConfigFile()
+{
+    //TODO load default settings
+    //then override
     ifstream configFile("config.ini");
 
     if(configFile.is_open())
@@ -20,22 +40,42 @@ ConfigFile::ConfigFile()
         string line;
         while(getline(configFile,line))
         {
-            cout << line <<endl;//debug
+            ProcessFileEntry(line);
         }
     }
-
-    //TODO default settings
-    AddKey("PawnccLocation","pawncc");
-
-    InitValuesMap();
 }
 
-void ConfigFile::AddKey(std::string key, string value)
+void ConfigFile::ProcessFileEntry(string entry)
 {
-    //TODO
+    if(entry.find('=')==string::npos)
+        throw runtime_error("Found bad entry: "+entry);
+
+    string key=entry.substr(0,entry.find('='));
+
+    //Erase spaces from 'key'
+    std::string::iterator end_pos = std::remove(key.begin(), key.end(), ' ');
+    key.erase(end_pos, key.end());
+    //
+
+    //check for bad entries
+    bool found=false;
+    for(string e : entriesDictionary)
+    {
+        if(e==key)
+        {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+        throw (runtime_error("Bad key entry: "+key));
+
+    string value=entry.substr(entry.find('=')+1,entry.size());
+    AddKey(key,value);
 }
 
-void ConfigFile::InitValuesMap()
+const vector<string> ConfigFile::entriesDictionary{"PawnccLocation"};
+void ConfigFile::WriteDefaultConfig(ofstream & file)
 {
-    //TODO
+    file << "PawnccLocation=pawncc" <<endl;
 }

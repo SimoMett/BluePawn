@@ -7,8 +7,12 @@
 
 #include <fstream>
 #include <filesystem>
+#include <algorithm>
+#include <string>
 #include <iostream>
 #include <map>
+#include <vector>
+#include <exception>
 
 using namespace std;
 
@@ -18,18 +22,27 @@ public:
 
     ConfigFile();
 
-    std::string GetKey(const std::string & key)
+    std::string GetKeyValue(const string & key)
     {
+        string value;
+        if(valuesMap.find(key)!=valuesMap.end())
+            value=valuesMap[key];
         return valuesMap[key];
     }
 
-    void AddKey(std::string key, string value);//TODO
+    void AddKey(std::string key, string value);
 
 private:
+    void GenerateConfigFile();
+    void LoadConfigFile();
 
-    void InitValuesMap();
+    void ProcessFileEntry(string entry);
+
+    void WriteDefaultConfig(ofstream & file);
 
     map<string,string> valuesMap;
+
+    static const vector<string> entriesDictionary;
 
 };
 
