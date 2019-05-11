@@ -7,6 +7,7 @@
 #include "CompilerDialog.h"
 #include "IncludeDirDialog.h"
 #include "WindowsIDs.h"
+#include "CompilerCfgDialog.h"
 
 using namespace std;
 
@@ -319,8 +320,11 @@ void MainWindow::OnChangeIncludesFolder(wxCommandEvent &event)
 
 void MainWindow::OnCompilerSettings(wxCommandEvent &event)
 {
-    wxMessageBox("TODO","Compiler Settings",wxICON_WARNING,__null,0,0);
+    //wxMessageBox("TODO","Compiler Settings",wxICON_WARNING,__null,0,0);
     //TODO Compiler settings dialog
+    CompilerCfgDialog * compilerCfgDialog=new CompilerCfgDialog(this,wxID_ANY);
+
+    compilerCfgDialog->Show();
 }
 
 void MainWindow::OnTypeText(wxStyledTextEvent &event)
