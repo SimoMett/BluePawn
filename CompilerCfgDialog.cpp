@@ -3,8 +3,9 @@
 //
 
 #include "CompilerCfgDialog.h"
+#include "ConfigFile.h"
 
-CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id): wxDialog( parent, id, "Compiler settings")//BIG TODO
+CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id, ConfigFile & configFile): wxDialog( parent, id, "Compiler settings"), configFile(configFile)//BIG TODO
 {
     this->SetSizeHints( wxSize( 600,-1 ), wxDefaultSize );
 
@@ -20,7 +21,7 @@ CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id): wxDialog(
 
     pawncLocTextCtrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     bSizer4->Add( pawncLocTextCtrl, 1, wxALL|wxEXPAND, 5 );
-    pawncLocTextCtrl->AppendText("babla");
+    pawncLocTextCtrl->AppendText(configFile.GetKeyValue("PawnccLocation"));
 
 
     bSizer2->Add( bSizer4, 1, wxALL|wxEXPAND, 5 );
@@ -34,7 +35,7 @@ CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id): wxDialog(
 
     pawncOptTextCtrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     bSizer5->Add( pawncOptTextCtrl, 1, wxEXPAND|wxALL, 5 );
-    pawncOptTextCtrl->AppendText("babla2");
+    pawncOptTextCtrl->AppendText(configFile.GetKeyValue("PawnccOptions"));
 
 
     bSizer2->Add( bSizer5, 1, wxALL|wxEXPAND, 5 );

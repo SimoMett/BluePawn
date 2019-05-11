@@ -7,14 +7,16 @@
 
 
 #include <wx/wx.h>
+#include "ConfigFile.h"
 
 class CompilerCfgDialog : public wxDialog
 {
 public:
-    CompilerCfgDialog(wxWindow* parent, wxWindowID id);
+    CompilerCfgDialog(wxWindow* parent, wxWindowID id,ConfigFile & configFile);
 
 private:
 
+    ConfigFile & configFile;
     wxTextCtrl * pawncLocTextCtrl;
     wxTextCtrl * pawncOptTextCtrl;
 

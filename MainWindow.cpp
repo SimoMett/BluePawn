@@ -320,9 +320,8 @@ void MainWindow::OnChangeIncludesFolder(wxCommandEvent &event)
 
 void MainWindow::OnCompilerSettings(wxCommandEvent &event)
 {
-    //wxMessageBox("TODO","Compiler Settings",wxICON_WARNING,__null,0,0);
     //TODO Compiler settings dialog
-    CompilerCfgDialog * compilerCfgDialog=new CompilerCfgDialog(this,wxID_ANY);
+    CompilerCfgDialog * compilerCfgDialog=new CompilerCfgDialog(this,wxID_ANY,configFile);
 
     compilerCfgDialog->Show();
 }
