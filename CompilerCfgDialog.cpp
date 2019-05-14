@@ -4,6 +4,13 @@
 
 #include "CompilerCfgDialog.h"
 #include "ConfigFile.h"
+#include "WindowsIDs.h"
+
+BEGIN_EVENT_TABLE(CompilerCfgDialog, wxDialog)
+                EVT_BUTTON(ID_CompilerCfgApply,CompilerCfgDialog::OnApplyChanges)
+                EVT_BUTTON(ID_CompilerCfgExit,CompilerCfgDialog::OnExit)
+                EVT_BUTTON(ID_CompilerCfgApplyExit,CompilerCfgDialog::OnApplyAndExit)
+END_EVENT_TABLE()
 
 CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id, ConfigFile & configFile): wxDialog( parent, id, "Compiler settings"), configFile(configFile)//BIG TODO
 {
@@ -19,7 +26,7 @@ CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id, ConfigFile
     m_staticText1->Wrap( -1 );
     bSizer4->Add( m_staticText1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-    pawncLocTextCtrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    pawncLocTextCtrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 ,wxDefaultValidator,"PawnccLocation");
     bSizer4->Add( pawncLocTextCtrl, 1, wxALL|wxEXPAND, 5 );
     pawncLocTextCtrl->AppendText(configFile.GetKeyValue("PawnccLocation"));
 
@@ -33,7 +40,7 @@ CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id, ConfigFile
     m_staticText2->Wrap( -1 );
     bSizer5->Add( m_staticText2, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-    pawncOptTextCtrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    pawncOptTextCtrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 ,wxDefaultValidator,"PawnccOptions");
     bSizer5->Add( pawncOptTextCtrl, 1, wxEXPAND|wxALL, 5 );
     pawncOptTextCtrl->AppendText(configFile.GetKeyValue("PawnccOptions"));
 
@@ -46,13 +53,13 @@ CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id, ConfigFile
 
     bSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
 
-    wxButton * m_button3 = new wxButton( this, wxID_ANY, wxT("Ok"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton * m_button3 = new wxButton( this, ID_CompilerCfgApplyExit, wxT("Ok"), wxDefaultPosition, wxDefaultSize, 0 );
     bSizer3->Add( m_button3, 0, wxALL, 5 );
 
-    wxButton * m_button4 = new wxButton( this, wxID_ANY, wxT("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton * m_button4 = new wxButton( this, ID_CompilerCfgApply, wxT("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
     bSizer3->Add( m_button4, 0, wxALL, 5 );
 
-    wxButton * m_button5 = new wxButton( this, wxID_ANY, wxT("Exit"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton * m_button5 = new wxButton( this, ID_CompilerCfgExit, wxT("Discard"), wxDefaultPosition, wxDefaultSize, 0 );
     bSizer3->Add( m_button5, 0, wxALL, 5 );
 
 
@@ -64,4 +71,22 @@ CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id, ConfigFile
     bSizer2->Fit( this );
 
     this->Centre( wxBOTH );
+}
+
+void CompilerCfgDialog::OnApplyChanges(wxCommandEvent &event)
+{
+    configFile.SetKeyValue(pawncLocTextCtrl->GetName().ToStdString(),pawncLocTextCtrl->GetLineText(0).ToStdString());
+    configFile.SetKeyValue(pawncOptTextCtrl->GetName().ToStdString(),pawncOptTextCtrl->GetLineText(0).ToStdString());
+    configFile.SaveConfigFile();
+}
+
+void CompilerCfgDialog::OnExit(wxCommandEvent &event)
+{
+    Close(true);
+}
+
+void CompilerCfgDialog::OnApplyAndExit(wxCommandEvent &event)
+{
+    OnApplyChanges(event);
+    OnExit(event);
 }

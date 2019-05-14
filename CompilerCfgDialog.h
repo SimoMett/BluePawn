@@ -20,6 +20,12 @@ private:
     wxTextCtrl * pawncLocTextCtrl;
     wxTextCtrl * pawncOptTextCtrl;
 
+    void OnApplyChanges(wxCommandEvent &event);
+    void OnExit(wxCommandEvent & event);
+    void OnApplyAndExit(wxCommandEvent & event);
+
+    DECLARE_EVENT_TABLE();
+
 };
 
 

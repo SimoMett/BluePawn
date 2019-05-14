@@ -33,6 +33,8 @@ public:
 
     void SetKeyValue(std::string key, string value);
 
+    void SaveConfigFile();
+
 private:
     void GenerateConfigFile();
     void LoadDefaultSettings();
@@ -41,8 +43,6 @@ private:
     void ProcessFileEntry(string entry);
 
     void WriteDefaultConfig(ofstream & file);
-
-    void SaveConfigFile();
 
     map<string,string> valuesMap;
 
