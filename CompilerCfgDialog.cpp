@@ -53,14 +53,14 @@ CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id, ConfigFile
 
     bSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
 
-    wxButton * m_button3 = new wxButton( this, ID_CompilerCfgApplyExit, wxT("Ok"), wxDefaultPosition, wxDefaultSize, 0 );
-    bSizer3->Add( m_button3, 0, wxALL, 5 );
+    wxButton * okButton = new wxButton( this, ID_CompilerCfgApplyExit, wxT("Ok"), wxDefaultPosition, wxDefaultSize, 0 );
+    bSizer3->Add( okButton, 0, wxALL, 5 );
 
-    wxButton * m_button4 = new wxButton( this, ID_CompilerCfgApply, wxT("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-    bSizer3->Add( m_button4, 0, wxALL, 5 );
+    wxButton * applyButton = new wxButton( this, ID_CompilerCfgApply, wxT("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
+    bSizer3->Add( applyButton, 0, wxALL, 5 );
 
-    wxButton * m_button5 = new wxButton( this, ID_CompilerCfgExit, wxT("Discard"), wxDefaultPosition, wxDefaultSize, 0 );
-    bSizer3->Add( m_button5, 0, wxALL, 5 );
+    wxButton * discardButton = new wxButton( this, ID_CompilerCfgExit, wxT("Discard"), wxDefaultPosition, wxDefaultSize, 0 );
+    bSizer3->Add( discardButton, 0, wxALL, 5 );
 
 
     bSizer2->Add( bSizer3, 1, wxEXPAND, 5 );
