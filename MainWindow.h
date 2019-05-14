@@ -26,19 +26,18 @@ public:
 
     explicit MainWindow(ConfigFile & configFile);
 
-    const string & GetIncludesPath()
+    const string GetIncludesPath() const
     {
-        return includesPath;
+        return configFile.GetKeyValue("IncludesFold");
     }
 
-    void SetIncludePath(const string & path)
+    void SetIncludesPath(string path)
     {
-        includesPath=path;
+        configFile.SetKeyValue("IncludesFold",path);
     }
 
 protected:
 
-    string includesPath;
     PawnDocument * currentFile;
     string compileFlags;
     unique_ptr<Research> research;

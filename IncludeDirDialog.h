@@ -14,21 +14,20 @@ class IncludeDirDialog : public wxFrame {
 
 public:
 
-    IncludeDirDialog(wxWindow* parent, wxWindowID id);
+    IncludeDirDialog(wxWindow* parent, wxWindowID id, string path);
 
-    string GetPath()
+    string GetPath() const
     {
         return dirPicker->GetPath().ToStdString();
     }
 
 private:
 
-    wxStaticText * staticText1;
     wxDirPickerCtrl * dirPicker;
 
-    void OnClose(wxCloseEvent & event);
+    void OnChangePath(wxFileDirPickerEvent & event);
 
-    DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE();
 };
 
 

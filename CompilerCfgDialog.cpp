@@ -12,7 +12,7 @@ BEGIN_EVENT_TABLE(CompilerCfgDialog, wxDialog)
                 EVT_BUTTON(ID_CompilerCfgApplyExit,CompilerCfgDialog::OnApplyAndExit)
 END_EVENT_TABLE()
 
-CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id, ConfigFile & configFile): wxDialog( parent, id, "Compiler settings"), configFile(configFile)//BIG TODO
+CompilerCfgDialog::CompilerCfgDialog(wxWindow *parent, wxWindowID id, ConfigFile & configFile): wxDialog( parent, id, "Compiler settings"), configFile(configFile)
 {
     this->SetSizeHints( wxSize( 600,-1 ), wxDefaultSize );
 

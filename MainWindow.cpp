@@ -11,8 +11,10 @@
 
 using namespace std;
 
-MainWindow::MainWindow(ConfigFile & configFile) :configFile(configFile), wxFrame(nullptr,wxID_ANY,"BluePawn",wxDefaultPosition,wxSize(1024,768)), includesPath("/include"), currentFile(new PawnDocument("")), compileFlags("-i'"+includesPath+"' ")
+MainWindow::MainWindow(ConfigFile & configFile) :configFile(configFile), wxFrame(nullptr,wxID_ANY,"BluePawn",wxDefaultPosition,wxSize(1024,768)), currentFile(new PawnDocument(""))
 {
+    compileFlags="-i'"+GetIncludesPath()+"' ";
+
     SetIcon(wxIcon("bluepawn.png",wxBITMAP_TYPE_ANI));//Subdirectory "BluePawn" is the working path
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
@@ -146,7 +148,7 @@ void MainWindow::CreateSplittedWindow()
 
     bSizer3->Add( m_treeListCtrl1, 1, wxEXPAND | wxALL, 5 );
 
-    m_treeListCtrl1->AppendColumn("Includes");
+    m_treeListCtrl1->AppendColumn("Includes (WIP)");
     wxTreeListItem asamp=m_treeListCtrl1->AppendItem(m_treeListCtrl1->GetRootItem(),"a_samp.inc");
     m_treeListCtrl1->AppendItem(asamp,"funzione()");
 
@@ -269,7 +271,7 @@ void MainWindow::OnFind(wxCommandEvent &event)
 
 void MainWindow::OnCompile(wxCommandEvent &event)
 {
-    if(includesPath.length())
+    if(GetIncludesPath().length())
     {
         if (currentFile->GetPath().length())
         {
@@ -309,18 +311,17 @@ void MainWindow::OnCompile(wxCommandEvent &event)
         wxMessageBox("No includes folder selected","Error",wxICON_ERROR);
 }
 
-void MainWindow::OnChangeIncludesFolder(wxCommandEvent &event)
+void MainWindow::OnChangeIncludesFolder(wxCommandEvent &event)//FIXME
 {
-    IncludeDirDialog * includeDialog=new IncludeDirDialog(this,wxID_ANY);
+    IncludeDirDialog * includeDialog=new IncludeDirDialog(this,wxID_ANY,configFile.GetKeyValue("IncludesFold"));
 
     includeDialog->Show();
 
-    cout << includeDialog->GetPath()<<endl;
+    cout << "DIR="<<includeDialog->GetPath()<<endl;
 }
 
 void MainWindow::OnCompilerSettings(wxCommandEvent &event)
 {
-    //TODO Compiler settings dialog
     CompilerCfgDialog * compilerCfgDialog=new CompilerCfgDialog(this,wxID_ANY,configFile);
 
     compilerCfgDialog->Show();
