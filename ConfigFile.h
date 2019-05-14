@@ -21,6 +21,7 @@ class ConfigFile
 public:
 
     ConfigFile();
+    ~ConfigFile();
 
     std::string GetKeyValue(const string & key)
     {
@@ -40,6 +41,8 @@ private:
     void ProcessFileEntry(string entry);
 
     void WriteDefaultConfig(ofstream & file);
+
+    void SaveConfigFile();
 
     map<string,string> valuesMap;
 

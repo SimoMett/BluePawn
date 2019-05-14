@@ -59,3 +59,30 @@ TEST(ConfigFile, EntryWithSpace)
 
     if(filesystem::exists("config.ini_bak")) filesystem::rename("config.ini_bak","config.ini"); 
 }
+
+TEST(ConfigFile,SaveConfigFile)
+{
+    if(filesystem::exists("config.ini")) filesystem::rename("config.ini","config.ini_bak");
+    
+    ConfigFile * configFile=new ConfigFile();
+    
+    configFile->SetKeyValue("PawnccLocation","pawncctest");
+    
+    delete configFile;
+    
+    ifstream ifstream1("config.ini");
+    
+    string line;
+    bool foundEntry=false;
+    while(getline(ifstream1,line))
+    {
+        if(line=="PawnccLocation=pawncctest")
+            foundEntry=true;
+    }
+    
+    ifstream1.close();
+    
+    if(filesystem::exists("config.ini_bak")) filesystem::rename("config.ini_bak","config.ini");
+    
+    ASSERT_TRUE(foundEntry);
+}

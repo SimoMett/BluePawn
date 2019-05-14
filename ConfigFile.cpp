@@ -16,6 +16,11 @@ ConfigFile::ConfigFile()
     LoadConfigFile();
 }
 
+ConfigFile::~ConfigFile()
+{
+    SaveConfigFile();
+}
+
 void ConfigFile::SetKeyValue(std::string key, string value)
 {
     //Erase spaces from 'key'
@@ -90,4 +95,17 @@ void ConfigFile::WriteDefaultConfig(ofstream & file)
 {
     file << "PawnccLocation=pawncc" <<endl;
     file << "PawnccOptions="<<endl;
+}
+
+void ConfigFile::SaveConfigFile()
+{
+    ofstream file;
+    file.open("config.ini");
+
+    for(int i=0;i<entriesDictionary.size();i++)
+    {
+        file << entriesDictionary[i] + "=" + GetKeyValue(entriesDictionary[i]) <<endl;
+    }
+
+    file.close();
 }
