@@ -8,6 +8,7 @@
 
 BEGIN_EVENT_TABLE(IncludeDirDialog, wxFrame)
                 EVT_DIRPICKER_CHANGED(ID_IncFoldPicker,IncludeDirDialog::OnChangePath)
+                EVT_FILEPICKER_CHANGED(ID_IncFoldPicker,IncludeDirDialog::OnChangePath)
 END_EVENT_TABLE()
 
 IncludeDirDialog::IncludeDirDialog( wxWindow* parent, wxWindowID id, string path) : wxFrame( parent, id, "Include folder")
@@ -21,7 +22,7 @@ IncludeDirDialog::IncludeDirDialog( wxWindow* parent, wxWindowID id, string path
     staticText1->Wrap( -1 );
     gSizer1->Add( staticText1, 0, wxALL|wxEXPAND, 5 );
 
-    dirPicker = new wxDirPickerCtrl( this, ID_IncFoldPicker, path , "Select a folder", wxDefaultPosition, wxDefaultSize, wxDIRP_DEFAULT_STYLE );
+    dirPicker = new wxDirPickerCtrl(this, ID_IncFoldPicker, path , "Select a folder", wxDefaultPosition, wxDefaultSize, wxDIRP_USE_TEXTCTRL );
     gSizer1->Add( dirPicker, 0, wxEXPAND|wxALIGN_BOTTOM|wxALL, 5 );
 
     this->SetSizer( gSizer1 );
@@ -30,15 +31,10 @@ IncludeDirDialog::IncludeDirDialog( wxWindow* parent, wxWindowID id, string path
     this->Centre( wxBOTH );
 }
 
-void IncludeDirDialog::OnChangePath(wxFileDirPickerEvent &event)//FIXME cannot select directory
+void IncludeDirDialog::OnChangePath(wxFileDirPickerEvent &event)
 {
-    cout << "trigg"<<endl;
-    cout <<"dir==" << dirPicker->GetPath()<<endl;
-
-    /*
     MainWindow * parent= dynamic_cast<MainWindow*>(GetParent());
 
-    cout <<"dir=" << dirPicker->GetDirName().GetName()<<endl;
+    //cout <<"dir==" << dirPicker->GetPath()<<endl;//DEBUG
     parent->SetIncludesPath(dirPicker->GetPath().ToStdString());
-    */
 }

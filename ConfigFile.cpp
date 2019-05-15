@@ -95,7 +95,7 @@ const vector<string> ConfigFile::entriesDictionary{"PawnccLocation","PawnccOptio
 void ConfigFile::WriteDefaultConfig(ofstream & file)
 {
     file << entriesDictionary[0]<<"=pawncc"     <<endl;
-    file << entriesDictionary[1]<<"="           <<endl;
+    file << entriesDictionary[1]<<"=-O2 -d0"    <<endl;
     file << entriesDictionary[2]<<"=include"    <<endl;
 }
 

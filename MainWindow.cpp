@@ -281,7 +281,7 @@ void MainWindow::OnCompile(wxCommandEvent &event)
             const int max_buff = 512;
             char buffer[max_buff];
 
-            string cmd = configFile.GetKeyValue("PawnccLocation")+" '" + currentFile->GetPath() + "'" +" -D'"+currentFile->GetPath().substr(0,currentFile->GetPath().find_last_of("/"))+"' " + compileFlags;
+            string cmd = configFile.GetKeyValue("PawnccLocation")+" '" + currentFile->GetPath() + "'" +" -D'"+currentFile->GetPath().substr(0,currentFile->GetPath().find_last_of("/"))+"' " + "-i"+GetIncludesPath() + " "+configFile.GetKeyValue("PawnccOptions");
             cmd.append(" 2>&1");
             cout << cmd <<endl;
 
@@ -297,6 +297,8 @@ void MainWindow::OnCompile(wxCommandEvent &event)
                 }
                 pclose(stream);
 
+                output.append("\nCompilation ended");
+
                 compilerDialog->Write(output);
             }
             else
@@ -311,13 +313,13 @@ void MainWindow::OnCompile(wxCommandEvent &event)
         wxMessageBox("No includes folder selected","Error",wxICON_ERROR);
 }
 
-void MainWindow::OnChangeIncludesFolder(wxCommandEvent &event)//FIXME
+void MainWindow::OnChangeIncludesFolder(wxCommandEvent &event)
 {
     IncludeDirDialog * includeDialog=new IncludeDirDialog(this,wxID_ANY,configFile.GetKeyValue("IncludesFold"));
 
     includeDialog->Show();
 
-    cout << "DIR="<<includeDialog->GetPath()<<endl;
+    //cout << "DIR="<<includeDialog->GetPath()<<endl;
 }
 
 void MainWindow::OnCompilerSettings(wxCommandEvent &event)
