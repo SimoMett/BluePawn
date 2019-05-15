@@ -36,6 +36,8 @@ public:
         configFile.SetKeyValue("IncludesFold",path);
     }
 
+    void OpenPawnDocument(string path);
+
 protected:
 
     PawnDocument * currentFile;

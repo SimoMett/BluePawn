@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <filesystem>
 #include "MainApp.h"
 
 using std::cout;
@@ -12,6 +13,12 @@ bool MainApp::OnInit()
 {
     mainWindow=new MainWindow(configFile);
     mainWindow->Show(true);
+
+    if(argc>1)//TODO Open document
+    {
+        if(std::filesystem::exists(string(argv[1])))
+            mainWindow->OpenPawnDocument(string(argv[1]));
+    }
     return true;
 }
 

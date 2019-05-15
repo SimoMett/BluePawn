@@ -238,6 +238,18 @@ void MainWindow::OnOpenFile(wxCommandEvent &event)
         ShowFileDialog(fileDialog);
 }
 
+void MainWindow::OpenPawnDocument(string path)
+{
+    cout << "opd"<<endl;
+    if(currentFile)
+        delete currentFile;
+
+    currentFile=new PawnDocument(path);
+    currentFile->WriteInTextEditor(*textEditor);
+    currentFile->isEdited=false;
+    ResetAppName();
+}
+
 void MainWindow::ShowFileDialog(wxFileDialog & fileDialog)
 {
     if(fileDialog.ShowModal()==wxID_OK)
@@ -245,14 +257,7 @@ void MainWindow::ShowFileDialog(wxFileDialog & fileDialog)
         string path=fileDialog.GetPath().ToStdString();
         if(path.length())
         {
-            if(currentFile)
-                delete currentFile;
-
-            currentFile=new PawnDocument(path);
-            currentFile->WriteInTextEditor(*textEditor);
-            currentFile->isEdited=false;
-
-            ResetAppName();
+            OpenPawnDocument(path);
         }
         else
             wxMessageBox("Cannot open this file","Error",wxICON_ERROR);
@@ -318,8 +323,6 @@ void MainWindow::OnChangeIncludesFolder(wxCommandEvent &event)
     IncludeDirDialog * includeDialog=new IncludeDirDialog(this,wxID_ANY,configFile.GetKeyValue("IncludesFold"));
 
     includeDialog->Show();
-
-    //cout << "DIR="<<includeDialog->GetPath()<<endl;
 }
 
 void MainWindow::OnCompilerSettings(wxCommandEvent &event)
@@ -331,7 +334,8 @@ void MainWindow::OnCompilerSettings(wxCommandEvent &event)
 
 void MainWindow::OnTypeText(wxStyledTextEvent &event)
 {
-    if(currentFile)
+    //cout << "ott "<<currentFile->isEdited<<" " << event.GetText().length()<<endl;
+    if(event.GetText().length() && currentFile)
     {
         currentFile->isEdited=true;
         ResetAppName();
