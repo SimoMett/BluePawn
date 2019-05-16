@@ -2,8 +2,8 @@
 // Created by matteo on 16/05/19.
 //
 
-#ifndef BLUEPAWN_BLUEPAWNPNGRES_H
-#define BLUEPAWN_BLUEPAWNPNGRES_H
+#ifndef BLUEPAWN_BLUEPAWNPNGRES_HPP
+#define BLUEPAWN_BLUEPAWNPNGRES_HPP
 
 static const unsigned char bluepawn []={
 
@@ -10036,4 +10036,4 @@ static const unsigned char bluepawn []={
         0x82
 };
 
-#endif //BLUEPAWN_BLUEPAWNPNGRES_H
+#endif //BLUEPAWN_BLUEPAWNPNGRES_HPP

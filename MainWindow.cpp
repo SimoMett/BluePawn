@@ -9,7 +9,7 @@
 #include "IncludeDirDialog.h"
 #include "WindowsIDs.h"
 #include "CompilerCfgDialog.h"
-#include "BluePawnPngRes.h"
+#include "BluePawnPngRes.hpp"
 
 using namespace std;
 

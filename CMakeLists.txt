@@ -8,7 +8,7 @@ include(${wxWidgets_USE_FILE})
 
 add_subdirectory(GTest)
 
-set(SOURCE_FILES MainApp.cpp MainApp.h MainWindow.cpp MainWindow.h CompilerDialog.cpp CompilerDialog.h IncludeDirDialog.cpp IncludeDirDialog.h WindowsIDs.h PawnDocument.cpp PawnDocument.h Research.cpp Research.h ConfigFile.cpp ConfigFile.h CompilerCfgDialog.cpp CompilerCfgDialog.h BluePawnPngRes.h)
+set(SOURCE_FILES MainApp.cpp MainApp.h MainWindow.cpp MainWindow.h CompilerDialog.cpp CompilerDialog.h IncludeDirDialog.cpp IncludeDirDialog.h WindowsIDs.h PawnDocument.cpp PawnDocument.h Research.cpp Research.h ConfigFile.cpp ConfigFile.h CompilerCfgDialog.cpp CompilerCfgDialog.h BluePawnPngRes.hpp)
 
 add_executable(BluePawn ${SOURCE_FILES})
 
