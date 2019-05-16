@@ -11,10 +11,12 @@ using std::endl;
 
 bool MainApp::OnInit()
 {
+    wxInitAllImageHandlers();
+
     mainWindow=new MainWindow(configFile);
     mainWindow->Show(true);
 
-    if(argc>1)//TODO Open document
+    if(argc>1)
     {
         if(std::filesystem::exists(string(argv[1])))
             mainWindow->OpenPawnDocument(string(argv[1]));

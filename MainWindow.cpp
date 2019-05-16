@@ -3,11 +3,13 @@
 //
 
 #include <sstream>
+#include <wx/mstream.h>
 #include "MainWindow.h"
 #include "CompilerDialog.h"
 #include "IncludeDirDialog.h"
 #include "WindowsIDs.h"
 #include "CompilerCfgDialog.h"
+#include "BluePawnPngRes.h"
 
 using namespace std;
 
@@ -15,7 +17,8 @@ MainWindow::MainWindow(ConfigFile & configFile) :configFile(configFile), wxFrame
 {
     compileFlags="-i'"+GetIncludesPath()+"' ";
 
-    SetIcon(wxIcon("bluepawn.png",wxBITMAP_TYPE_ANI));//Subdirectory "BluePawn" is the working path
+    SetBluePawnIcon();
+
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
     CreateMenuBar();
@@ -35,6 +38,20 @@ MainWindow::MainWindow(ConfigFile & configFile) :configFile(configFile), wxFrame
     SetupBindings();
 
     ResetAppName();
+}
+
+void MainWindow::SetBluePawnIcon()
+{
+    //found this fantastic solution online :P
+    wxMemoryInputStream pngStream(bluepawn, sizeof(bluepawn));
+
+    wxImage tmp;
+    tmp.LoadFile(pngStream, wxBITMAP_TYPE_PNG);
+
+    wxIcon icon;
+    icon.CopyFromBitmap(tmp);
+
+    SetIcon(icon);
 }
 
 void MainWindow::SetupBindings()
@@ -240,7 +257,6 @@ void MainWindow::OnOpenFile(wxCommandEvent &event)
 
 void MainWindow::OpenPawnDocument(string path)
 {
-    cout << "opd"<<endl;
     if(currentFile)
         delete currentFile;
 

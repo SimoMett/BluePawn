@@ -66,6 +66,7 @@ private:
     wxTreeListCtrl* m_treeListCtrl1;
     wxStatusBar* statusBar;
 
+    void SetBluePawnIcon();
     void CreateMenuBar();
     void CreateToolbar();
     void CreateSplittedWindow();
