@@ -68,6 +68,8 @@ void MainWindow::SetupBindings()
     Bind(wxEVT_STC_MODIFIED,&MainWindow::OnTypeText,this,ID_TextEditor);
 
     Bind(wxEVT_CHAR_HOOK,&MainWindow::KeyShortcutManager,this);
+
+    Bind(wxEVT_CLOSE_WINDOW,&MainWindow::OnFrameClose,this);
 }
 
 void MainWindow::CreateMenuBar()
@@ -440,4 +442,21 @@ void MainWindow::SaveFile()
         currentFile->Save(textEditor->GetText().ToStdString());
 
     ResetAppName();
+}
+
+void MainWindow::OnFrameClose(wxCloseEvent &event)
+{
+    bool canExit=false;
+    if(currentFile->isEdited)
+    {
+        wxMessageDialog newPage(this, "Warning: Any unsaved edit will be lost. Continue?", "New Script",wxYES_NO | wxCENTRE);
+
+        if (newPage.ShowModal() == wxID_YES)
+        {
+            canExit=true;
+        }
+    } else
+        canExit=true;
+    if(canExit)
+        Destroy();
 }

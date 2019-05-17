@@ -85,6 +85,7 @@ private:
     void OnCompilerSettings(wxCommandEvent & event);
     void OnTypeText(wxStyledTextEvent & event);
     void KeyShortcutManager(wxKeyEvent & event);
+    void OnFrameClose(wxCloseEvent & event);
 
     void ShowFileDialog(wxFileDialog & fileDialog);
     void FindDialog();
