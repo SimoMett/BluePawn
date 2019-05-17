@@ -450,13 +450,12 @@ void MainWindow::OnFrameClose(wxCloseEvent &event)
     if(currentFile->isEdited)
     {
         wxMessageDialog newPage(this, "Warning: Any unsaved edit will be lost. Continue?", "New Script",wxYES_NO | wxCENTRE);
-
         if (newPage.ShowModal() == wxID_YES)
-        {
             canExit=true;
-        }
-    } else
+    }
+    else
         canExit=true;
+
     if(canExit)
         Destroy();
 }
