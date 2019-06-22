@@ -6,7 +6,11 @@
 
 ConfigFile::ConfigFile()
 {
+#ifdef GTESTING
+    filePath=string(getpwuid(getuid())->pw_dir).append("/.BluePawn/GTEST/config.ini");
+#else
     filePath=string(getpwuid(getuid())->pw_dir).append("/.BluePawn/config.ini");
+#endif
     if(!filesystem::exists(filePath))
     {
         GenerateConfigFile();
