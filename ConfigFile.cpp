@@ -6,7 +6,8 @@
 
 ConfigFile::ConfigFile()
 {
-    if(!filesystem::exists("config.ini"))
+    filePath=string(getpwuid(getuid())->pw_dir).append("/.BluePawn/config.ini");
+    if(!filesystem::exists(filePath))
     {
         GenerateConfigFile();
     }
@@ -33,7 +34,7 @@ void ConfigFile::SetKeyValue(std::string key, string value)
 void ConfigFile::GenerateConfigFile()
 {
     ofstream file;
-    file.open("config.ini");
+    file.open(filePath);
 
     WriteDefaultConfig(file);
 
@@ -50,7 +51,7 @@ void ConfigFile::LoadDefaultSettings()
 
 void ConfigFile::LoadConfigFile()
 {
-    ifstream configFile("config.ini");
+    ifstream configFile(filePath);
 
     if(configFile.is_open())
     {
@@ -102,7 +103,7 @@ void ConfigFile::WriteDefaultConfig(ofstream & file)
 void ConfigFile::SaveConfigFile()
 {
     ofstream file;
-    file.open("config.ini");
+    file.open(filePath);
 
     for(int i=0;i<entriesDictionary.size();i++)
     {

@@ -13,6 +13,8 @@
 #include <map>
 #include <vector>
 #include <exception>
+#include <unistd.h>
+#include <pwd.h>
 
 using namespace std;
 
@@ -36,6 +38,7 @@ public:
     void SaveConfigFile();
 
 private:
+    string filePath;
     void GenerateConfigFile();
     void LoadDefaultSettings();
     void LoadConfigFile();
