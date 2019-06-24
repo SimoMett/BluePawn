@@ -25,7 +25,7 @@ MainWindow::MainWindow(ConfigFile & configFile) :configFile(configFile), wxFrame
 
     CreateToolbar();
 
-    CreateSplittedWindow();
+    CreateSplitWindow();
 
     research=unique_ptr<Research>(new Research(*textEditor));
 
@@ -147,7 +147,7 @@ void MainWindow::CreateToolbar()
     toolBar->Realize();
 }
 
-void MainWindow::CreateSplittedWindow()
+void MainWindow::CreateSplitWindow()
 {
     wxBoxSizer* bSizer1;
     bSizer1 = new wxBoxSizer( wxVERTICAL );

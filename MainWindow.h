@@ -70,7 +70,7 @@ private:
     void SetBluePawnIcon();
     void CreateMenuBar();
     void CreateToolbar();
-    void CreateSplittedWindow();
+    void CreateSplitWindow();
     void CreateTextEditor();
     void StatusBar();
     void SetupBindings();
