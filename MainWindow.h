@@ -51,6 +51,7 @@ private:
     wxMenu* fileMenu;
     wxMenu* buildMenu;
     wxMenu * settingsMenu;
+    wxMenu * infoMenu;
     wxToolBar* toolBar;
     wxToolBarToolBase* newDocTool;
     wxToolBarToolBase* openTool;

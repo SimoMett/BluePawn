@@ -102,15 +102,22 @@ void MainWindow::CreateMenuBar()
 
     settingsMenu=new wxMenu();
 
-    wxMenuItem* includesMenuItem=new wxMenuItem( fileMenu, ID_IncFolder, "Includes folder");
+    wxMenuItem* includesMenuItem=new wxMenuItem( settingsMenu, ID_IncFolder, "Includes folder");
     settingsMenu->Append( includesMenuItem );
-    wxMenuItem* compilerSettingsMenuItem=new wxMenuItem(fileMenu,ID_CompilerCfg,"Compiler settings");
+    wxMenuItem* compilerSettingsMenuItem=new wxMenuItem(settingsMenu,ID_CompilerCfg,"Compiler settings");
     settingsMenu->Append(compilerSettingsMenuItem);
 
     /*wxMenuItem* compilerMenuItem=new wxMenuItem( fileMenu, wxID_ANY, "Compiler");
     settingsMenu->Append( compilerMenuItem );*/
 
     menuBar->Append(settingsMenu,"Settings");
+
+    infoMenu=new wxMenu();
+    wxMenuItem * creditsMenuItem=new wxMenuItem(infoMenu,wxID_ANY,"BluePawn " BP_VERSION);
+    creditsMenuItem->SetCheckable(false);
+    infoMenu->Append(creditsMenuItem);
+
+    menuBar->Append(infoMenu,"Infos");
 
     this->SetMenuBar( menuBar );
 }
