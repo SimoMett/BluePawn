@@ -63,7 +63,7 @@ private:
     wxSplitterWindow* m_splitter1;
     wxPanel* panel1;
     wxPanel* m_panel2;
-    wxTreeListCtrl* m_treeListCtrl1;
+    wxTreeListCtrl* includesTreeListCtrl;
     wxStatusBar* statusBar;
 
     void SetBluePawnIcon();
@@ -74,6 +74,7 @@ private:
     void StatusBar();
     void SetupBindings();
     void ResetAppName();
+    void UpdateIncludesTreeList();
 
     void OnNewPage(wxCommandEvent & event);
     void OnOpenFile(wxCommandEvent & event);

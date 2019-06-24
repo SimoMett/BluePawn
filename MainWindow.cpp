@@ -163,14 +163,12 @@ void MainWindow::CreateSplittedWindow()
     wxBoxSizer* bSizer3;
     bSizer3 = new wxBoxSizer( wxVERTICAL );
 
-    m_treeListCtrl1 = new wxTreeListCtrl( m_panel2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTL_DEFAULT_STYLE );
+    includesTreeListCtrl = new wxTreeListCtrl( m_panel2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTL_DEFAULT_STYLE );
 
-    bSizer3->Add( m_treeListCtrl1, 1, wxEXPAND | wxALL, 5 );
+    bSizer3->Add( includesTreeListCtrl, 1, wxEXPAND | wxALL, 5 );
 
-    m_treeListCtrl1->AppendColumn("Includes (WIP)");
-    wxTreeListItem asamp=m_treeListCtrl1->AppendItem(m_treeListCtrl1->GetRootItem(),"a_samp.inc");
-    m_treeListCtrl1->AppendItem(asamp,"funzione()");
-
+    includesTreeListCtrl->AppendColumn("Includes (WIP)");
+    UpdateIncludesTreeList();
 
     m_panel2->SetSizer( bSizer3 );
     m_panel2->Layout();
@@ -209,6 +207,8 @@ void MainWindow::CreateTextEditor()
     textEditor->StyleSetBold(wxSTC_C_COMMENTDOCKEYWORD, true);
 
     textEditor->SetKeyWords(0, wxT("return for while break continue do if else false true enum case default Float goto sizeof stock public new native forward switch"));//TODO Add more..
+    textEditor->SetMarginType(0,wxSTC_MARGIN_NUMBER);
+    textEditor->SetMarginWidth(0,30);
 }
 
 void MainWindow::StatusBar()
@@ -395,6 +395,9 @@ void MainWindow::ResetAppName()
         title.append(currentFile->GetName()+"]");
 
         SetTitle(title);
+
+        //Updates margins
+        textEditor->SetMarginWidth(0,textEditor->TextWidth(0,to_string(textEditor->GetNumberOfLines()))+4);//'+4' for proper alignment
     }
 }
 
@@ -458,4 +461,11 @@ void MainWindow::OnFrameClose(wxCloseEvent &event)
 
     if(canExit)
         Destroy();
+}
+
+void MainWindow::UpdateIncludesTreeList()
+{
+    cout << configFile.GetKeyValue("IncludesFold")<<endl;
+    wxTreeListItem asamp=includesTreeListCtrl->AppendItem(includesTreeListCtrl->GetRootItem(),"a_samp.inc");
+    includesTreeListCtrl->AppendItem(asamp,"funzione()");
 }
