@@ -113,7 +113,7 @@ void MainWindow::CreateMenuBar()
     menuBar->Append(settingsMenu,"Settings");
 
     infoMenu=new wxMenu();
-    wxMenuItem * creditsMenuItem=new wxMenuItem(infoMenu,wxID_ANY,"BluePawn " BP_VERSION);
+    wxMenuItem * creditsMenuItem=new wxMenuItem(infoMenu,wxID_ANY,"BluePawn " BP_VERSION " by DonSimonetti");
     creditsMenuItem->SetCheckable(false);
     infoMenu->Append(creditsMenuItem);
 
