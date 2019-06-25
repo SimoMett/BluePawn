@@ -470,7 +470,7 @@ void MainWindow::OnFrameClose(wxCloseEvent &event)
         Destroy();
 }
 
-void MainWindow::UpdateIncludesTreeList()//TODO
+void MainWindow::UpdateIncludesTreeList()
 {
     vector<string> incVector;
 
@@ -484,9 +484,27 @@ void MainWindow::UpdateIncludesTreeList()//TODO
 
     sort(incVector.begin(),incVector.end());
 
-    for(const auto & e : incVector)
+    for(const auto & elem : incVector)
     {
-        wxTreeListItem incFile=includesTreeListCtrl->AppendItem(includesTreeListCtrl->GetRootItem(),e);
-        includesTreeListCtrl->AppendItem(incFile,"funzione()");
+        wxTreeListItem incFile=includesTreeListCtrl->AppendItem(includesTreeListCtrl->GetRootItem(),elem);
+        AppendNatives(elem,incFile);
     }
 }
+
+vector<string> GetNatives(string includeName)//TODO Inspect includes and retrieve natives
+{
+    return vector<string>();
+}
+
+void MainWindow::AppendNatives(string name, wxTreeListItem &treeListItem)
+{
+    vector<string> natives=GetNatives(name);
+    if(natives.size())
+    {
+        for (auto &elem : natives)
+        {
+            includesTreeListCtrl->AppendItem(treeListItem, elem + "()");
+        }
+    }
+}
+
