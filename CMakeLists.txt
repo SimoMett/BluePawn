@@ -10,7 +10,7 @@ add_subdirectory(GTest)
 
 add_compile_definitions(BP_VERSION="v0.4")
 
-set(SOURCE_FILES MainApp.cpp MainApp.h MainWindow.cpp MainWindow.h CompilerDialog.cpp CompilerDialog.h IncludeDirDialog.cpp IncludeDirDialog.h WindowsIDs.h PawnDocument.cpp PawnDocument.h Research.cpp Research.h ConfigFile.cpp ConfigFile.h CompilerCfgDialog.cpp CompilerCfgDialog.h BluePawnPngRes.hpp)
+set(SOURCE_FILES MainApp.cpp MainApp.h MainWindow.cpp MainWindow.h CompilerDialog.cpp CompilerDialog.h IncludeDirDialog.cpp IncludeDirDialog.h WindowsIDs.h PawnDocument.cpp PawnDocument.h Research.cpp Research.h ConfigFile.cpp ConfigFile.h CompilerCfgDialog.cpp CompilerCfgDialog.h BluePawnPngRes.hpp IncludeFile.cpp IncludeFile.h)
 
 add_executable(BluePawn ${SOURCE_FILES})
 

@@ -17,6 +17,7 @@
 #include "PawnDocument.h"
 #include "Research.h"
 #include "ConfigFile.h"
+#include "IncludeFile.h"
 
 using std::string;
 
@@ -76,7 +77,7 @@ private:
     void SetupBindings();
     void ResetAppName();
     void UpdateIncludesTreeList();
-    void AppendNatives(string name, wxTreeListItem &treeListItem);
+    void AppendNatives(string &name, wxTreeListItem &treeListItem);
 
     void OnNewPage(wxCommandEvent & event);
     void OnOpenFile(wxCommandEvent & event);

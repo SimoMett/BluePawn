@@ -484,26 +484,23 @@ void MainWindow::UpdateIncludesTreeList()
 
     sort(incVector.begin(),incVector.end());
 
-    for(const auto & elem : incVector)
+    for(auto & elem : incVector)
     {
         wxTreeListItem incFile=includesTreeListCtrl->AppendItem(includesTreeListCtrl->GetRootItem(),elem);
         AppendNatives(elem,incFile);
     }
 }
 
-vector<string> GetNatives(string includeName)//TODO Inspect includes and retrieve natives
+void MainWindow::AppendNatives(string &name, wxTreeListItem &treeListItem)
 {
-    return vector<string>();
-}
+    IncludeFile includeFile(configFile.GetKeyValue("IncludesFold") + "/"+name);
 
-void MainWindow::AppendNatives(string name, wxTreeListItem &treeListItem)
-{
-    vector<string> natives=GetNatives(name);
-    if(natives.size())
+    vector<string> natives=includeFile.GetNatives();
+    if(!natives.empty())
     {
         for (auto &elem : natives)
         {
-            includesTreeListCtrl->AppendItem(treeListItem, elem + "()");
+            includesTreeListCtrl->AppendItem(treeListItem, elem);
         }
     }
 }
