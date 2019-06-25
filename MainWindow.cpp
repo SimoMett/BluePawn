@@ -174,7 +174,7 @@ void MainWindow::CreateSplitWindow()
 
     bSizer3->Add( includesTreeListCtrl, 1, wxEXPAND | wxALL, 5 );
 
-    includesTreeListCtrl->AppendColumn("Includes (WIP)");
+    includesTreeListCtrl->AppendColumn("Includes");
     UpdateIncludesTreeList();
 
     m_panel2->SetSizer( bSizer3 );
@@ -470,9 +470,23 @@ void MainWindow::OnFrameClose(wxCloseEvent &event)
         Destroy();
 }
 
-void MainWindow::UpdateIncludesTreeList()
+void MainWindow::UpdateIncludesTreeList()//TODO
 {
-    cout << configFile.GetKeyValue("IncludesFold")<<endl;
-    wxTreeListItem asamp=includesTreeListCtrl->AppendItem(includesTreeListCtrl->GetRootItem(),"a_samp.inc");
-    includesTreeListCtrl->AppendItem(asamp,"funzione()");
+    vector<string> incVector;
+
+    for (const auto & entry : filesystem::directory_iterator( configFile.GetKeyValue("IncludesFold") ))
+    {
+        string incName(entry.path());
+        incName.erase(0, incName.find_last_of("/")+1);
+
+        incVector.push_back(incName);
+    }
+
+    sort(incVector.begin(),incVector.end());
+
+    for(const auto & e : incVector)
+    {
+        wxTreeListItem incFile=includesTreeListCtrl->AppendItem(includesTreeListCtrl->GetRootItem(),e);
+        includesTreeListCtrl->AppendItem(incFile,"funzione()");
+    }
 }
