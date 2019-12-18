@@ -15,8 +15,13 @@ CompilerDialog::CompilerDialog(wxWindow *parent) : wxFrame(parent,wxID_ANY,"Comp
 
     textCtrl->SetEditable(false);
     textCtrl->WriteText("Compiling...\n\n");
+}
 
-    Show(true);
+void CompilerDialog::Refresh()
+{
+    textCtrl->Clear();
+    textCtrl->WriteText("Compiling...\n\n");
+    this->SetFocus();
 }
 
 void CompilerDialog::Write(std::string text)

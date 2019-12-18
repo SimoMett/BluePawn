@@ -322,7 +322,12 @@ void MainWindow::CompileCurrentFile()
             cmd.append(" 2>&1");
             cout << cmd <<endl;
 
-            CompilerDialog *compilerDialog = new CompilerDialog(this);
+            if(compilerDialog== nullptr)//Fixme crash when the dialog is closed
+                compilerDialog=new CompilerDialog(this);
+            if(compilerDialog->IsShown())
+                compilerDialog->Refresh();
+            else
+                compilerDialog->Show(true);
 
             stream = popen(cmd.c_str(), "r");
             if (stream)
@@ -344,7 +349,7 @@ void MainWindow::CompileCurrentFile()
             ResetAppName();
         }
         else
-            wxMessageBox("PWN file should be saved first", "Error", wxICON_ERROR);
+            wxMessageBox("PWN file should be saved first", "Error", wxICON_ERROR);//TODO replace with a saveFile dialog
     }
     else
         wxMessageBox("No includes folder selected","Error",wxICON_ERROR);

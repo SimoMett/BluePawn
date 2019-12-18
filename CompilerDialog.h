@@ -12,6 +12,7 @@ class CompilerDialog : public wxFrame{
 public:
     CompilerDialog(wxWindow * parent);
 
+    void Refresh();
     void Write(std::string text);
 
 private:

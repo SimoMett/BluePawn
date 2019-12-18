@@ -18,6 +18,7 @@
 #include "Research.h"
 #include "ConfigFile.h"
 #include "IncludeFile.h"
+#include "CompilerDialog.h"
 
 using std::string;
 
@@ -68,6 +69,7 @@ private:
     wxPanel* m_panel2;
     wxTreeListCtrl* includesTreeListCtrl;
     wxStatusBar* statusBar;
+    CompilerDialog *compilerDialog;
 
     void SetBluePawnIcon();
     void CreateMenuBar();
