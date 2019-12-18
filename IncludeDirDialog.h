@@ -26,6 +26,7 @@ private:
     wxDirPickerCtrl * dirPicker;
 
     void OnChangePath(wxFileDirPickerEvent & event);
+    void OnExit(wxCloseEvent & event);
 
     DECLARE_EVENT_TABLE();
 };

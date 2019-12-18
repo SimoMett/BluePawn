@@ -9,6 +9,7 @@
 BEGIN_EVENT_TABLE(IncludeDirDialog, wxFrame)
                 EVT_DIRPICKER_CHANGED(ID_IncFoldPicker,IncludeDirDialog::OnChangePath)
                 EVT_FILEPICKER_CHANGED(ID_IncFoldPicker,IncludeDirDialog::OnChangePath)
+                EVT_CLOSE(IncludeDirDialog::OnExit)
 END_EVENT_TABLE()
 
 IncludeDirDialog::IncludeDirDialog( wxWindow* parent, wxWindowID id, string path) : wxFrame( parent, id, "Include folder")
@@ -37,4 +38,10 @@ void IncludeDirDialog::OnChangePath(wxFileDirPickerEvent &event)
 
     //cout <<"dir==" << dirPicker->GetPath()<<endl;//DEBUG
     parent->SetIncludesPath(dirPicker->GetPath().ToStdString());
+}
+
+void IncludeDirDialog::OnExit(wxCloseEvent & event)
+{
+    //TODO update "Includes" tree
+    event.Skip();
 }
