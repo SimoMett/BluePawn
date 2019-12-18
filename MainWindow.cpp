@@ -474,12 +474,15 @@ void MainWindow::UpdateIncludesTreeList()
 {
     vector<string> incVector;
 
-    for (const auto & entry : filesystem::directory_iterator( configFile.GetKeyValue("IncludesFold") ))
+    if(configFile.GetKeyValue("IncludesFold").length())
     {
-        string incName(entry.path());
-        incName.erase(0, incName.find_last_of("/")+1);
+        for (const auto &entry : filesystem::directory_iterator(configFile.GetKeyValue("IncludesFold")))
+        {
+            string incName(entry.path());
+            incName.erase(0, incName.find_last_of("/") + 1);
 
-        incVector.push_back(incName);
+            incVector.push_back(incName);
+        }
     }
 
     sort(incVector.begin(),incVector.end());
