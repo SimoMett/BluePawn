@@ -38,6 +38,7 @@ public:
     }
 
     void OpenPawnDocument(string path);
+    void UpdateIncludesTreeList();
 
 protected:
 
@@ -76,7 +77,6 @@ private:
     void StatusBar();
     void SetupBindings();
     void ResetAppName();
-    void UpdateIncludesTreeList();
     void AppendNatives(string &name, wxTreeListItem &treeListItem);
 
     void OnNewPage(wxCommandEvent & event);

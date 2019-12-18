@@ -472,6 +472,7 @@ void MainWindow::OnFrameClose(wxCloseEvent &event)
 
 void MainWindow::UpdateIncludesTreeList()
 {
+    includesTreeListCtrl->DeleteAllItems();
     vector<string> incVector;
 
     if(configFile.GetKeyValue("IncludesFold").length())

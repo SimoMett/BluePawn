@@ -42,6 +42,7 @@ void IncludeDirDialog::OnChangePath(wxFileDirPickerEvent &event)
 
 void IncludeDirDialog::OnExit(wxCloseEvent & event)
 {
-    //TODO update "Includes" tree
+    MainWindow * parent= dynamic_cast<MainWindow*>(GetParent());
+    parent->UpdateIncludesTreeList();
     event.Skip();
 }
