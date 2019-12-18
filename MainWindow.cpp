@@ -301,6 +301,11 @@ void MainWindow::OnFind(wxCommandEvent &event)
 
 void MainWindow::OnCompile(wxCommandEvent &event)
 {
+    CompileCurrentFile();
+}
+
+void MainWindow::CompileCurrentFile()
+{
     if(GetIncludesPath().length())
     {
         if (currentFile->GetPath().length())
@@ -311,7 +316,9 @@ void MainWindow::OnCompile(wxCommandEvent &event)
             const int max_buff = 512;
             char buffer[max_buff];
 
-            string cmd = configFile.GetKeyValue("PawnccLocation")+" '" + currentFile->GetPath() + "'" +" -D'"+currentFile->GetPath().substr(0,currentFile->GetPath().find_last_of("/"))+"' " + "-i"+GetIncludesPath() + " "+configFile.GetKeyValue("PawnccOptions");
+            string cmd = configFile.GetKeyValue("PawnccLocation") + " '" + currentFile->GetPath() + "'" + " -D'" +
+                         currentFile->GetPath().substr(0, currentFile->GetPath().find_last_of("/")) + "' " + "-i" +
+                         GetIncludesPath() + " " + configFile.GetKeyValue("PawnccOptions");
             cmd.append(" 2>&1");
             cout << cmd <<endl;
 
@@ -386,6 +393,11 @@ void MainWindow::KeyShortcutManager(wxKeyEvent &event)
                 break;
             }
         }
+    }
+    if(wxGetKeyState(WXK_F5))
+    {
+        //FIXME if F5 is kept pressed it opens lots of compilation dialogs
+        CompileCurrentFile();
     }
     event.Skip();
 }

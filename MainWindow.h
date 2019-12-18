@@ -94,6 +94,8 @@ private:
     void ShowFileDialog(wxFileDialog & fileDialog);
     void FindDialog();
     void SaveFile();
+
+    void CompileCurrentFile();
 };
 
 
