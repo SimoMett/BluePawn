@@ -495,7 +495,7 @@ void MainWindow::UpdateIncludesTreeList()
 
     if(incFolder.length() && filesystem::directory_entry(incFolder).exists())
     {
-        for (const auto &entry : filesystem::directory_iterator(configFile.GetKeyValue("IncludesFold")))
+        for (const auto &entry : filesystem::directory_iterator(incFolder))
         {
             string incName(entry.path());
             incName.erase(0, incName.find_last_of("/") + 1);
