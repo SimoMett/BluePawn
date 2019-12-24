@@ -490,22 +490,23 @@ void MainWindow::OnFrameClose(wxCloseEvent &event)
 void MainWindow::UpdateIncludesTreeList()
 {
     includesTreeListCtrl->DeleteAllItems();
-    vector<string> incVector;
+    vector<string> includesVec;
+    const string & incFolder=configFile.GetKeyValue("IncludesFold");
 
-    if(configFile.GetKeyValue("IncludesFold").length())
+    if(incFolder.length() && filesystem::directory_entry(incFolder).exists())
     {
         for (const auto &entry : filesystem::directory_iterator(configFile.GetKeyValue("IncludesFold")))
         {
             string incName(entry.path());
             incName.erase(0, incName.find_last_of("/") + 1);
 
-            incVector.push_back(incName);
+            includesVec.push_back(incName);
         }
     }
 
-    sort(incVector.begin(),incVector.end());
+    sort(includesVec.begin(), includesVec.end());
 
-    for(auto & elem : incVector)
+    for(auto & elem : includesVec)
     {
         wxTreeListItem incFile=includesTreeListCtrl->AppendItem(includesTreeListCtrl->GetRootItem(),elem);
         AppendNatives(elem,incFile);
