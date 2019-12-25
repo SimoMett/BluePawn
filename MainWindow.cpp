@@ -12,6 +12,7 @@
 #include "BluePawnPngRes.hpp"
 
 using namespace std;
+namespace filesystem= boost::filesystem;
 
 MainWindow::MainWindow(ConfigFile & configFile) :configFile(configFile), wxFrame(nullptr,wxID_ANY,"BluePawn",wxDefaultPosition,wxSize(1024,768)), currentFile(new PawnDocument(""))
 {
@@ -495,7 +496,7 @@ void MainWindow::UpdateIncludesTreeList()
 
     if(incFolder.length() && wxDirExists(incFolder))
     {
-        for (boost::filesystem::directory_entry entry : boost::filesystem::directory_iterator(incFolder))
+        for (const auto & entry : filesystem::directory_iterator(incFolder))
         {
             string incName(entry.path().string());
             incName.erase(0, incName.find_last_of("/") + 1);
