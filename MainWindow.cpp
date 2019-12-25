@@ -493,11 +493,11 @@ void MainWindow::UpdateIncludesTreeList()
     vector<string> includesVec;
     const string & incFolder=configFile.GetKeyValue("IncludesFold");
 
-    if(incFolder.length() && filesystem::directory_entry(incFolder).exists())
+    if(incFolder.length() && wxDirExists(incFolder))
     {
-        for (const auto &entry : filesystem::directory_iterator(incFolder))
+        for (boost::filesystem::directory_entry entry : boost::filesystem::directory_iterator(incFolder))
         {
-            string incName(entry.path());
+            string incName(entry.path().string());
             incName.erase(0, incName.find_last_of("/") + 1);
 
             includesVec.push_back(incName);

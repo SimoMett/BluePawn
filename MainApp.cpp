@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <filesystem>
+#include <boost/filesystem.hpp>
 #include "MainApp.h"
 
 using std::cout;
@@ -18,7 +18,7 @@ bool MainApp::OnInit()
 
     if(argc>1)
     {
-        if(std::filesystem::exists(string(argv[1])))
+        if(boost::filesystem::exists(string(argv[1])))
             mainWindow->OpenPawnDocument(string(argv[1]));
     }
     return true;

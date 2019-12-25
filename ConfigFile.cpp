@@ -11,7 +11,7 @@ ConfigFile::ConfigFile()
 #else
     filePath=string(getpwuid(getuid())->pw_dir).append("/.BluePawn/config.ini");
 #endif
-    if(!filesystem::exists(filePath))
+    if(!boost::filesystem::exists(filePath))
     {
         GenerateConfigFile();
     }

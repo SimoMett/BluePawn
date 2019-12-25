@@ -1,8 +1,17 @@
 cmake_minimum_required(VERSION 3.12)
 project(BluePawn)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
+#boost
+set(boost_min_ver 1.71.0)
+set(boost_libs system filesystem)
+find_package(Boost ${boost_min_ver})
+if(Boost_FOUND)
+    find_package(Boost ${boost_min_ver} COMPONENTS ${boost_libs})
+endif()
+
+#wx
 find_package(wxWidgets REQUIRED net core base adv xml stc)
 include(${wxWidgets_USE_FILE})
 
@@ -14,4 +23,4 @@ set(SOURCE_FILES MainApp.cpp MainApp.h MainWindow.cpp MainWindow.h CompilerDialo
 
 add_executable(BluePawn ${SOURCE_FILES})
 
-target_link_libraries(BluePawn ${wxWidgets_LIBRARIES} stdc++fs)
+target_link_libraries(BluePawn ${Boost_LIBRARIES} ${wxWidgets_LIBRARIES})

@@ -6,7 +6,7 @@
 #define BLUEPAWN_CONFIGFILE_H
 
 #include <fstream>
-#include <filesystem>
+#include <boost/filesystem.hpp>
 #include <algorithm>
 #include <string>
 #include <iostream>
